@@ -13,6 +13,13 @@ async function getSearchPackage(origin, destination) {
   const data = await res.json();
   return data;
 }
+async function getPackage() {
+  const res = await fetch(
+    `http://localhost:8080/api/v1/expedia`
+  );
+  const data = await res.json();
+  return data;
+}
 // // // // // // // // // // // // // // // // // // // // // //
 function addOffers(offers) {
   if (offers.length === 0) {
@@ -74,7 +81,7 @@ form.addEventListener("submit", async (e) => {
   const origin = originCity.value;
   const destination = destinationCity.value;
   offers_package.innerHTML =
-   '<p class="text-primary text-center w-100 fs-3 fw-bold">Loading packages.</p>';
+    '<p class="text-primary text-center w-100 fs-3 fw-bold">Loading packages.</p>';
 
   submitButton.disabled = true;
   try {
@@ -91,4 +98,23 @@ form.addEventListener("submit", async (e) => {
   } finally {
     submitButton.disabled = false;
   }
+});
+// // // // // // // // // // // // // // // // // // // // // //
+window.addEventListener('load', async () => {
+  offers_package.innerHTML =
+    '<p class="text-primary text-center w-100 fs-3 fw-bold">Loading packages.</p>';
+
+ 
+  try {
+    const data = await getPackage();
+
+    addOffers(data);
+  } catch (err) {
+    offers_package.innerHTML = "";
+    offers_package.insertAdjacentHTML(
+      "beforeend",
+      '<p class="text-danger text-center w-100">Error fetching packages. Please try again.</p>'
+    );
+    console.log(err);
+  } 
 });
