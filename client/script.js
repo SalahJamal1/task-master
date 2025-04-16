@@ -77,7 +77,10 @@ form.addEventListener("submit", async (e) => {
     const data = await getSearchPackage(origin, destination);
     addOffers(data);
   } catch (err) {
-    console.log(err.message);
-    alert("Filed to fetch data");
+    offers_package.insertAdjacentHTML(
+      "beforeend",
+      '<p class="text-danger text-center w-100">Error fetching packages. Please try again.</p>'
+    );
+    console.log(err);
   }
 });
