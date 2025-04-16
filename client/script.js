@@ -74,7 +74,7 @@ form.addEventListener("submit", async (e) => {
   const origin = originCity.value;
   const destination = destinationCity.value;
   offers_package.innerHTML =
-    '<p class="text-primary text-center w-100">Loading packages.</p>';
+   '<p class="text-primary text-center w-100 fs-3 fw-bold">Loading packages.</p>';
 
   submitButton.disabled = true;
   try {
