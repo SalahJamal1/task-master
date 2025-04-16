@@ -2,6 +2,7 @@
 // // // // // // // // // // // // // // // // // // // // // //
 const originCity = document.getElementById("originCity");
 const destinationCity = document.getElementById("destinationCity");
+const submitButton = document.getElementById("submitButton");
 const form = document.querySelector("form");
 const offers_package = document.querySelector(".offers_package");
 // // // // // // // // // // // // // // // // // // // // // //
@@ -72,9 +73,13 @@ form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const origin = originCity.value;
   const destination = destinationCity.value;
-  if (!origin && !destination) return;
+  offers_package.innerHTML =
+    '<p class="text-primary text-center w-100">Loading packages.</p>';
+
+  submitButton.disabled = true;
   try {
     const data = await getSearchPackage(origin, destination);
+
     addOffers(data);
   } catch (err) {
     offers_package.innerHTML = "";
@@ -83,5 +88,7 @@ form.addEventListener("submit", async (e) => {
       '<p class="text-danger text-center w-100">Error fetching packages. Please try again.</p>'
     );
     console.log(err);
+  } finally {
+    submitButton.disabled = false;
   }
 });
